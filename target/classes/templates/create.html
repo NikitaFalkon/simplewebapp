@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <link rel="shortcut icon" href="">
+
+</head>
+
+<body>
+
+<form action="" id="emplForm">
+    <label for="firstName">Enter name:</label><br/>
+    <input type="text" name="first_name" id="firstName" required><br/>
+    <label for="lastName">Enter lastname:</label><br/>
+    <input type="text" name="last_name" id="lastName" required><br/>
+    <label for="departamentId">Enter departament id:</label><br/>
+    <input type="number" name="departamentId" id="departamentId" required><br/>
+    <label for="jobTitle">Enter job title:</label><br/>
+    <input type="text" name="jobTitle" id="jobTitle" required><br/>
+    <label for="gender">Enter gender:</label><br/>
+    <select name="gender" id="gender">
+        <option value="MALE">MALE</option>
+        <option value="FEMALE" selected>FEMALE</option>
+        <option value="NONBINARY">NONBINARY</option>
+    </select><br/>
+    <label for="dateOfBirth">Enter date of birth:</label><br/>
+    <input type="date" name="dateOfBirth" id="dateOfBirth" required><br/>
+    <button id="createButt">Create!</button>
+</form>
+<br/>
+<form action="/" target="_blank">
+    <button>Back</button>
+</form><br/>
+
+<script>
+    let createbutton = document.getElementById('createButt');
+
+    function create() {
+        $.post( "/create", { first_name: document.getElementById('firstName').value,
+            last_name: document.getElementById('lastName').value,
+            departament_id: document.getElementById('departamentId').value,
+            job_title: document.getElementById('jobTitle').value,
+            gender: document.getElementById('gender').value,
+            date_of_birth: document.getElementById('dateOfBirth').value })
+            .done(function( data ) {
+                alert("done!");
+            });
+    }
+
+    createbutton.addEventListener('click', create);
+
+</script>
+
+<!--<script src="js/script.js"></script>-->
+</body>
+</html>

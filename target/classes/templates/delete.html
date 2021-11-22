@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <link rel="shortcut icon" href="">
+
+</head>
+
+
+<form action="" id="emplForm">
+    <label for="idered">Enter id of deleting employee:</label><br/>
+    <input type="text" name="idered" id="idered" required><br/>
+    <button id="deleteButt">Delete!</button>
+</form>
+<br/>
+<form action="/" target="_blank">
+    <button>Back</button>
+</form>
+
+<!--<script src="js/script.js"></script>-->
+<script type="text/javascript">
+    let deleteButt = document.getElementById('deleteButt');
+    let idered = document.getElementById('idered');
+
+    let ids = [];
+
+    $.get("/employees", function (data) {
+
+        for(let dat of data) {
+            ids.push(dat.employee_id);
+        }
+
+    })
+
+    function deleting() {
+        $.post("/" + idered.value + "/delete", function (data) {})
+    }
+
+    deleteButt.addEventListener('click', function () {
+        let ok = false;
+
+        for(let id of ids) {
+            if(id == idered.value) {
+                ok = true;
+                break;
+            }
+        }
+
+        if(ok) {
+            alert('Done!');
+        } else {
+            alert('There\'s no such an employee');
+        }
+
+
+    });
+    deleteButt.addEventListener('click', deleting);
+</script>
+</body>
+</html>
