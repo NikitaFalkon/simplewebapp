@@ -9,15 +9,3 @@ public class Main {
         SpringApplication.run(Main.class);
     }
 }
-
-
-//    IF NOT EXISTS ( SELECT * FROM employees)
-//BEGIN
-//        INSERT INTO employee (first_name, last_name, departament_id, job_title, gender,  date_of_birth)
-//        VALUES ('Pit', 'Mark', 2, 'clicking_on_buttons', 'MALE', 12.05.2000) ;
-//        END
-
-//    SELECT COUNT (departament_id) as a FROM employee;
-//
-//if a = 0 then (INSERT INTO employee (first_name, last_name, departament_id, job_title, gender,  date_of_birth)
-//        VALUES ('Pit', 'Mark', 2, 'clicking_on_buttons', 'MALE', '23-05-2015'));

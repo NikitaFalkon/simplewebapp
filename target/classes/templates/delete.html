@@ -18,9 +18,6 @@
     <button id="deleteButt">Delete!</button>
 </form>
 <br/>
-<form action="/" target="_blank">
-    <button>Back</button>
-</form>
 
 <!--<script src="js/script.js"></script>-->
 <script type="text/javascript">
@@ -29,7 +26,7 @@
 
     let ids = [];
 
-    $.get("/employees", function (data) {
+    $.get("http://localhost:8080//employees", function (data) {
 
         for(let dat of data) {
             ids.push(dat.employee_id);
@@ -38,7 +35,7 @@
     })
 
     function deleting() {
-        $.post("/" + idered.value + "/delete", function (data) {})
+        $.post("http://localhost:8080//" + idered.value + "//delete", function (data) {})
     }
 
     deleteButt.addEventListener('click', function () {

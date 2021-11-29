@@ -8,17 +8,16 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:63342")
 @RestController
 public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
     @GetMapping("/employees")
-    public List<Employee> getAll() throws IOException {
+    public List<Employee> getAll() {
         return employeeService.findAll();
     }
 
@@ -26,38 +25,45 @@ public class EmployeeController {
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> create(Employee employee) {
-        employeeService.create(employee);
+        if(employeeService.create(employee)) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 
     @GetMapping("/{id}")
-    public Optional<Employee> getOne(@PathVariable("id") Long id) {
-        return employeeService.findById(id);
+    public Employee getOne(@PathVariable("id") Long id) {
+        if (employeeService.existById(id)) {
+            return employeeService.findById(id);
+        }
+
+        return null;
+
     }
 
     @PostMapping("/{id}/delete")
-    public String delete(@PathVariable("id") Long id) {
-        if (!employeeService.findById(id).isPresent()) {
-            return "There's no such an employee";
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        if (!employeeService.existById(id)) {
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         }
 
         employeeService.deleteById(id);
 
-        return "Done!";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value = "/{id}/redact",
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public String replace(@PathVariable("id") Long id, Employee employee) {
-        if (!employeeService.findById(id).isPresent()) {
-            return "There's no such an employee";
+    public ResponseEntity<?> replace(@PathVariable("id") Long id, Employee employee) {
+        if (!employeeService.existById(id)) {
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         }
 
         employeeService.replace(id, employee);
 
-        return "Done!";
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

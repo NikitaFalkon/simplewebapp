@@ -3,11 +3,12 @@ package com.mastery.java.task.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 @Entity
 @Table(name = "employee")
-public class Employee {
+public class Employee implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id")
@@ -26,9 +27,8 @@ public class Employee {
     @JsonProperty("job_title")
     private String job_title;
     @Column(name="gender")
-    @Enumerated(EnumType.STRING)
     @JsonProperty("gender")
-    private Gender gender;
+    private String gender;
     @Column(name="date_of_birth")
     @JsonProperty("date_of_birth")
     private Date date_of_birth;
@@ -74,19 +74,19 @@ public class Employee {
         this.job_title = jobTitle;
     }
 
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
     public Date getDate_of_birth() {
         return date_of_birth;
     }
 
     public void setDate_of_birth(Date date_of_birth) {
         this.date_of_birth = date_of_birth;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

@@ -12,7 +12,7 @@
 </head>
 
 <script>
-    $.get("/employees", function (data) {
+    $.get("http://localhost:8080//employees", function (data) {
         let table = "<table border='1'><tr><td>First name</td><td>Last name</td><td>Departament id</td><td>Job title</td><td>Gender</td><td>date of birth</td><td>";
 
         for(let dat of data) {

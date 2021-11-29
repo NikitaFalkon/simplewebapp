@@ -45,7 +45,7 @@
 
     let ids = [];
 
-    $.get("/employees", function (data) {
+    $.get("http://localhost:8080//employees", function (data) {
 
         for(let dat of data) {
             ids.push(dat.employee_id);
@@ -54,14 +54,13 @@
     })
 
     function redact() {
-        $.post( "/" + idered.value + "/redact", { first_name: document.getElementById('firstName').value,
+        $.post( "http://localhost:8080//" + idered.value + "//redact", { first_name: document.getElementById('firstName').value,
             last_name: document.getElementById('lastName').value,
             departament_id: document.getElementById('departamentId').value,
             job_title: document.getElementById('jobTitle').value,
             gender: document.getElementById('gender').value,
             date_of_birth: document.getElementById('dateOfBirth').value })
             .done(function( data ) {
-                alert(data.value);
             });
     }
 
