@@ -30,7 +30,7 @@ public class EmployeeServiceTest {
     public void testNewEmployee() {
         Employee employee = new Employee();
         employee.setFirst_name("name");
-        boolean created = this.employeeService.create(employee);
+        Boolean created = this.employeeService.create(employee);
         Assert.assertTrue(created);
         Assert.assertNotNull(employee.getFirst_name());
         (Mockito.verify(this.employeeDao, Mockito.times(1))).create(employee.getFirst_name(),

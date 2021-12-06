@@ -12,8 +12,9 @@
 </head>
 
 
-<form action="" onsubmit="return validateForm()" id="emplForm">
-    <label for="firstName">Enter name:</label><br/>
+<!--<form action="" onsubmit="return validateForm()" id="emplForm">-->
+<form action="" id="emplForm">
+<label for="firstName">Enter name:</label><br/>
     <input type="text" name="first_name" id="firstName" required><br/>
     <label for="lastName">Enter lastname:</label><br/>
     <input type="text" name="last_name" id="lastName" required><br/>
@@ -34,7 +35,7 @@
     <button id="redactButt">Redact!</button>
 </form>
 <br/>
-<form action="/" target="_blank">
+<form action="index.html" target="_blank">
     <button>Back</button>
 </form>
 
@@ -42,6 +43,7 @@
 <script type="text/javascript">
     let redactbutton = document.getElementById('redactButt');
     let idered = document.getElementById('idered');
+
 
     let ids = [];
 
@@ -61,6 +63,10 @@
             gender: document.getElementById('gender').value,
             date_of_birth: document.getElementById('dateOfBirth').value })
             .done(function( data ) {
+                if(data != null) {
+                    alert("Done!");
+                }
+
             });
     }
 
@@ -74,9 +80,7 @@
             }
         }
 
-        if(ok) {
-            alert('Done!');
-        } else {
+        if(!ok) {
             alert('There\'s no such an employee');
         }
     });

@@ -12,7 +12,7 @@ public class EmployeeService {
     @Autowired
     EmployeeDaoImpl employeeDao;
 
-    public boolean create(Employee employee) {
+    public Boolean create(Employee employee) {
         return employeeDao.create(employee.getFirst_name(),
                 employee.getLast_name(),
                 employee.getDepartament_id(),
@@ -29,29 +29,28 @@ public class EmployeeService {
         return employeeDao.getById(id);
     }
 
-    public Boolean existById(Long id) {
-        try {
-            findById(id);
-        } catch (Exception e) {
-            return false;
+    public Boolean deleteById(Long id) {
+        Employee employee = findById(id);
+
+        if(employee != null) {
+            employeeDao.deleteById(id);
+            return true;
         }
 
-        return true;
+        return false;
     }
 
-    public Boolean deleteById(Long id) {
-        employeeDao.deleteById(id);
+    public Boolean replace(Long id, Employee employeeRep) {
+        if(findById(id) != null) {
+            return employeeDao.replace(id,
+                    employeeRep.getFirst_name(),
+                    employeeRep.getLast_name(),
+                    employeeRep.getDepartament_id(),
+                    employeeRep.getJob_title(),
+                    employeeRep.getGender(),
+                    employeeRep.getDate_of_birth());
+        }
 
-        return true;
-    }
-
-    public void replace(Long id, Employee employeeRep) {
-        employeeDao.replace(id,
-                employeeRep.getFirst_name(),
-                employeeRep.getLast_name(),
-                employeeRep.getDepartament_id(),
-                employeeRep.getJob_title(),
-                employeeRep.getGender(),
-                employeeRep.getDate_of_birth());
+        return false;
     }
 }

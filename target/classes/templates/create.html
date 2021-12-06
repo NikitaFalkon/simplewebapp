@@ -33,9 +33,9 @@
     <button id="createButt">Create!</button>
 </form>
 <br/>
-<form action="/" target="_blank">
+<form action="index.html" target="_blank">
     <button>Back</button>
-</form><br/>
+</form>
 
 <script>
     let createbutton = document.getElementById('createButt');
@@ -48,14 +48,13 @@
             gender: document.getElementById('gender').value,
             date_of_birth: document.getElementById('dateOfBirth').value })
             .done(function( data ) {
-                alert("done!");
+                if(data != null) {
+                    alert("Done!");
+                }
             });
     }
-
     createbutton.addEventListener('click', create);
 
 </script>
-
-<!--<script src="js/script.js"></script>-->
 </body>
 </html>

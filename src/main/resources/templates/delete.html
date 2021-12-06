@@ -11,15 +11,18 @@
 
 </head>
 
-
+<body>
 <form action="" id="emplForm">
     <label for="idered">Enter id of deleting employee:</label><br/>
     <input type="text" name="idered" id="idered" required><br/>
     <button id="deleteButt">Delete!</button>
 </form>
 <br/>
+<form action="index.html" target="_blank">
+    <button>Back</button>
+</form>
 
-<!--<script src="js/script.js"></script>-->
+<script src="js/script.js"></script>
 <script type="text/javascript">
     let deleteButt = document.getElementById('deleteButt');
     let idered = document.getElementById('idered');
@@ -35,7 +38,11 @@
     })
 
     function deleting() {
-        $.post("http://localhost:8080//" + idered.value + "//delete", function (data) {})
+        $.post("http://localhost:8080//" + idered.value + "//delete").done(function (data) {
+            if(data != null) {
+                alert("Done!");
+            }
+        })
     }
 
     deleteButt.addEventListener('click', function () {
@@ -48,9 +55,7 @@
             }
         }
 
-        if(ok) {
-            alert('Done!');
-        } else {
+        if(!ok) {
             alert('There\'s no such an employee');
         }
 

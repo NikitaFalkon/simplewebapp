@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS  employee (
     gender VARCHAR(20),
     date_of_birth TIMESTAMP
 );
-SELECT * FROM employee;
 
 
 

@@ -17,53 +17,52 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @GetMapping("/employees")
-    public List<Employee> getAll() {
-        return employeeService.findAll();
+    public ResponseEntity<List<Employee>> getAll() {
+        final List<Employee> employees = employeeService.findAll();
+
+        return employees != null &&  !employees.isEmpty()
+                ? new ResponseEntity<>(employees, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping(value = "/create",
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> create(Employee employee) {
-        if(employeeService.create(employee)) {
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        }
+        Boolean created = employeeService.create(employee);
 
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return created
+                ? new ResponseEntity<>(HttpStatus.CREATED)
+                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
 
-    @GetMapping("/{id}")
-    public Employee getOne(@PathVariable("id") Long id) {
-        if (employeeService.existById(id)) {
-            return employeeService.findById(id);
-        }
+    @GetMapping("/{id}/find")
+    public ResponseEntity<Employee> getOne(@PathVariable("id") Long id) {
+        final Employee employee = employeeService.findById(id);
 
-        return null;
-
+        return employee != null
+                ? new ResponseEntity<>(employee, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PostMapping("/{id}/delete")
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
-        if (!employeeService.existById(id)) {
-            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
-        }
+        final boolean deleted = employeeService.deleteById(id);
 
-        employeeService.deleteById(id);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return deleted
+                ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
     @PostMapping(value = "/{id}/redact",
             consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> replace(@PathVariable("id") Long id, Employee employee) {
-        if (!employeeService.existById(id)) {
-            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
-        }
+        final boolean updated = employeeService.replace(id, employee);
 
-        employeeService.replace(id, employee);
-
-        return new ResponseEntity<>(HttpStatus.OK);
+        return updated
+                ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 }
